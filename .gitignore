@@ -9,8 +9,7 @@ env/
 venv/
 .venv/
 env*
-dist/
-build/
+dist
 *.egg
 *.egg-info/
 .tox/
