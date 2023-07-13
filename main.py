@@ -66,6 +66,7 @@ def getConfig(name):
     if isAdmin(request.args):
         return Response(
             openvpn.getConfig(name),
+            mimetype="text/x-ovpn",
             headers={"Content-Disposition": f"attachment;filename={name}.ovpn"},
         )
     else:
