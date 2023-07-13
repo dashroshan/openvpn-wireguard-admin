@@ -1,7 +1,7 @@
 from flask import *
-from flask_cors import CORS
 import os
 import openvpn
+import psutil
 from creds import creds
 
 username = creds["username"]
@@ -13,7 +13,6 @@ app = Flask(
     static_folder=os.path.abspath("frontend/build/static"),
     template_folder=os.path.abspath("frontend/build"),
 )
-CORS(app, supports_credentials=True, expose_headers="Authorization")
 
 
 def isAdmin(reqArgs):
@@ -29,7 +28,11 @@ def hello():
 
 @app.route("/login")
 def loginCheck():
-    return {"success": isAdmin(request.args)}
+    return {
+        "success": isAdmin(request.args),
+        "memory": psutil.virtual_memory().percent * 100,
+        "cpu": psutil.cpu_percent() * 100,
+    }
 
 
 @app.route("/list")

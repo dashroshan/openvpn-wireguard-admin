@@ -5,6 +5,7 @@ import axios from "axios";
 export default function App() {
     useEffect(hideLoader, []);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [systemStats, setSetsystemStats] = useState({ cpu: 0, memory: 0 });
 
     const [newUser, setNewUser] = useState("");
     const [wrongUserName, setwrongUserName] = useState(true);
@@ -29,6 +30,7 @@ export default function App() {
                     }
                 });
                 if (response.success === true) {
+                    setSetsystemStats({ "cpu": response.cpu, "memory": response.memory });
                     setLoggedIn(true);
                     syncUserList();
                 }
@@ -87,7 +89,16 @@ export default function App() {
             <div className="grid place-items-center px-4">
                 <div className="mt-4 card w-full bg-base-100 border shadow-lg max-w-sm">
                     <div className="card-body">
-                        <h1 className="card-title text-2xl mb-3">{loggedIn ? "OpenVPN Admin" : "Login to OpenVPN"}</h1>
+                        <h1 className="card-title text-2xl mb-2">{loggedIn ? "OpenVPN Admin" : "Login to OpenVPN"}</h1>
+                        {loggedIn ? <>
+                            <h2 className="-mb-2 mt-1 font-semibold">
+                                <span className="mr-2">Current load on CPU</span>
+                                <progress className="progress progress-primary w-lg h-4 translate-y-[0.1rem]" value={systemStats.cpu} max="100"></progress>
+                            </h2>
+                            <h2 className="mb-3 font-semibold">
+                                <span className="mr-2">Current RAM usage</span>
+                                <progress className="progress progress-primary w-lg h-4 translate-y-[0.1rem]" value={systemStats.memory} max="100"></progress>
+                            </h2></> : null}
                         {loggedIn ? null : <>
                             <div className="form-control w-full max-w-xs">
                                 <label className="label"><span className="label-text">Enter your admin username</span></label>
