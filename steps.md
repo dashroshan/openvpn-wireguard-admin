@@ -1,4 +1,4 @@
-Open ports
+Open ports in Azure portal then these in VM
 
 ```
 sudo ufw allow 80
@@ -45,3 +45,30 @@ wget https://git.io/vpn -O openvpn-install.sh
 sudo chmod +x openvpn-install.sh
 sudo bash openvpn-install.sh
 ```
+
+Run this admin portal
+
+```
+git clone https://github.com/dashroshan/openvpn-admin ov
+cd ov
+sudo python3 -m pip install -r requirements.txt
+sudo nano creds.py
+```
+
+Fill creds.py with below content
+
+```
+creds = {
+    "username": "user",
+    "password": "pass",
+}
+```
+
+Start portal in screen session
+
+```
+screen -S ov
+sudo python3 main.py
+```
+
+`Ctrl+A+D` to deattach screen session and `screen -r ov` to reattach. `screen -ls` can be used to list screen session, and `screen -r ov -X quit` can be used to delete the session.
