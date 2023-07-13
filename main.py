@@ -30,8 +30,8 @@ def hello():
 def loginCheck():
     return {
         "success": isAdmin(request.args),
-        "memory": psutil.virtual_memory().percent * 100,
-        "cpu": psutil.cpu_percent() * 100,
+        "memory": psutil.virtual_memory().percent,
+        "cpu": psutil.cpu_percent(),
     }
 
 
