@@ -82,6 +82,7 @@ def removeUser(user):
         "sudo ./easyrsa --batch --days=3650 gen-crl",
         "sudo rm -f /etc/openvpn/server/crl.pem",
         "sudo cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem",
+        'chown nobody:"nogroup" /etc/openvpn/server/crl.pem',
     ]
     process = Popen(
         "/bin/bash",
