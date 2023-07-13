@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import hideLoader from "./utils/hideLoader";
 import axios from "axios";
+import NavBar from "./NavBar";
 
 export default function App() {
     useEffect(hideLoader, []);
@@ -86,7 +87,8 @@ export default function App() {
 
     return (
         <>
-            <div className="grid place-items-center px-4">
+            <NavBar />
+            <div className="grid place-items-center px-4 mt-20">
                 <div className="mt-4 card w-full bg-base-100 border shadow-lg max-w-sm">
                     <div className="card-body">
                         <h1 className="card-title text-2xl mb-2">{loggedIn ? "OpenVPN Admin" : "Login to OpenVPN"}</h1>
@@ -140,7 +142,7 @@ export default function App() {
                         </div>
                     </div>
 
-                    <div className="grid place-items-center px-4">
+                    <div className="grid place-items-center px-4 mb-4">
                         <div className="mt-4 card bg-base-100 border shadow-lg max-w-2xl w-[92vw]">
                             <div className="card-body">
                                 <div className="overflow-x-auto">

@@ -10,5 +10,6 @@ module.exports = {
     daisyui: {
         themes: ["light"],
     },
+    darkMode: ['class', '[data-mode="dark"]'],
 }
 
