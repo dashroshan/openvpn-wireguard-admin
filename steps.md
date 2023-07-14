@@ -6,6 +6,17 @@ sudo ufw allow 443
 sudo ufw allow 4000
 ```
 
+Create 1GB Swap memeory `(1M * 1000 ~= 1GB)`
+```
+mkdir -p /var/swapmemory
+cd /var/swapmemory
+dd if=/dev/zero of=swapfile bs=1M count=1000
+mkswap swapfile
+swapon swapfile
+chmod 600 swapfile
+free -m
+```
+
 Install python
 
 ```
