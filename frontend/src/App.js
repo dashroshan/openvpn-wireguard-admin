@@ -66,7 +66,7 @@ export default function App() {
                 }
             });
             if (response.success === true)
-                syncUserList();
+                await syncUserList();
         } catch (error) {
             console.log(error);
         }
@@ -81,7 +81,7 @@ export default function App() {
                 }
             });
             if (response.success === true)
-                syncUserList();
+                await syncUserList();
         } catch (error) {
             console.log(error);
         }
