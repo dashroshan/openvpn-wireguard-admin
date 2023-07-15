@@ -51,7 +51,7 @@ echo "Web admin panel cloned and packages installed."
 
 # Create the configWireguard.py
 read -p "Enter 'wireguard' or 'openvpn' as needed: " vpntype
-if [[ "$vpntype" -eq "wireguard" ]]; then
+if [ "$vpntype" == "wireguard" ]; then
 read -p "Enter 'True' or 'False' for AdBlock: " adblock
 cat << EOF > configWireguard.py
 wireGuardBlockAds = $adblock
@@ -72,7 +72,7 @@ EOF
 echo "config.py file created for web admin panel."
 
 # Download vpn setup script
-if [[ "$vpntype" -eq "wireguard" ]]; then
+if [ "$vpntype" == "wireguard" ]; then
 wget https://raw.githubusercontent.com/Nyr/wireguard-install/master/wireguard-install.sh -O vpn-install.sh
 else
 wget https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh -O vpn-install.sh
