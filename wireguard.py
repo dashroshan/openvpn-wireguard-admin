@@ -14,14 +14,32 @@ def createUser(user):
     else:
         dns = "1.1.1.1, 1.0.0.1"
 
+    commandsOctet = [
+        "sudo grep AllowedIPs /etc/wireguard/wg0.conf | cut -d '.' -f 4 | cut -d '/' -f 1",
+    ]
+
+    processOctet = Popen(
+        "/bin/bash",
+        shell=False,
+        universal_newlines=True,
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=PIPE,
+    )
+    octets, err = processOctet.communicate("\n".join(commandsOctet))
+    octets = [octet for octet in octets.split("\n") if octet]
+
+    octet = -1
+    for i in range(2, 255):
+        if str(i) not in octets:
+            octet = i
+            break
+
+    if octet == -1:
+        return
+
     commandsRSA = [
-        "octet=2",
-        "while sudo grep AllowedIPs /etc/wireguard/wg0.conf | cut -d '.' -f 4 | cut -d '/' -f 1 | grep -q '$octet'; do",
-        "(( octet++ ))",
-        "done",
-        "if [[ '$octet' -eq 255 ]]; then",
-        "exit",
-        "fi",
+        f"octet={octet}",
         "key=$(wg genkey)",
         "psk=$(wg genpsk)",
         "sudo bash -c 'cat >> /etc/wireguard/wg0.conf' << EOF",
@@ -39,13 +57,10 @@ def createUser(user):
         "PrivateKey = $key",
         " ",
         "[Peer]",
-        "PublicKey = $(sudo grep PrivateKey /etc/wireguard/wg0.conf | cut -d "
-        " -f 3 | wg pubkey)",
+        "PublicKey = $(sudo grep PrivateKey /etc/wireguard/wg0.conf | cut -d ' ' -f 3 | wg pubkey)",
         "PresharedKey = $psk",
         "AllowedIPs = 0.0.0.0/0, ::/0",
-        "Endpoint = $(sudo grep '^# ENDPOINT' /etc/wireguard/wg0.conf | cut -d "
-        " -f 3):$(sudo grep ListenPort /etc/wireguard/wg0.conf | cut -d "
-        " -f 3)",
+        "Endpoint = $(sudo grep '^# ENDPOINT' /etc/wireguard/wg0.conf | cut -d ' ' -f 3):$(sudo grep ListenPort /etc/wireguard/wg0.conf | cut -d ' ' -f 3)",
         "PersistentKeepalive = 25",
         "EOF",
         f'''sudo bash -c "wg addconf wg0 <(sed -n '/^# BEGIN_PEER {user}/,/^# END_PEER {user}/p' /etc/wireguard/wg0.conf)"''',
