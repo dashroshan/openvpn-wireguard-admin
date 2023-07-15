@@ -1,7 +1,13 @@
 from subprocess import Popen, PIPE
 
+vpnName = "OpenVPN"
+vpnExtension = "ovpn"
+
 
 def createUser(user):
+    if user in listUsers():
+        return
+
     commandsRSA = [
         "cd /etc/openvpn/server/easy-rsa/",
         f'sudo ./easyrsa --batch --days=3650 build-client-full "{user}" nopass',

@@ -1,7 +1,29 @@
 import { useState } from "react";
 
-export default function NavBar() {
+export default function NavBar(props) {
     const [navOpen, setNavOpen] = useState(false);
+
+    const logoImgs = {
+        OpenVPN: "https://i.imgur.com/rvMXsbm.png",
+        WireGuard: "https://i.imgur.com/WZXbuW5.png",
+    }
+
+    const clientLinks = {
+        OpenVPN: [
+            { name: "Windows Client", link: "https://openvpn.net/downloads/openvpn-connect-v3-windows.msi" },
+            { name: "MacOS Client", link: "https://openvpn.net/downloads/openvpn-connect-v3-macos.dmg" },
+            { name: "Linux Client", link: "https://openvpn.net/cloud-docs/owner/connectors/connector-user-guides/openvpn-3-client-for-linux.html" },
+            { name: "Android Client", link: "https://play.google.com/store/apps/details?id=net.openvpn.openvpn" },
+            { name: "iOS Client", link: "https://apps.apple.com/us/app/openvpn-connect/id590379981" },
+        ],
+        WireGuard: [
+            { name: "Windows Client", link: "https://download.wireguard.com/windows-client/wireguard-installer.exe" },
+            { name: "MacOS Client", link: "https://itunes.apple.com/us/app/wireguard/id1451685025?ls=1&mt=12" },
+            { name: "Linux Client", link: "https://www.wireguard.com/install" },
+            { name: "Android Client", link: "https://play.google.com/store/apps/details?id=com.wireguard.android" },
+            { name: "iOS Client", link: "https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8" },
+        ],
+    }
 
     return (
         <div data-mode="dark">
@@ -9,12 +31,12 @@ export default function NavBar() {
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a href="/" className="flex items-center">
                         <img
-                            src="https://i.imgur.com/rvMXsbm.png"
+                            src={logoImgs[props.vpnType]}
                             className="h-8 mr-3"
-                            alt="Flowbite Logo"
+                            alt="VPN Logo"
                         />
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                            OpenVPN
+                            {props.vpnType}
                         </span>
                     </a>
                     <button
@@ -44,46 +66,14 @@ export default function NavBar() {
                     </button>
                     <div className={"w-full lg:block lg:w-auto" + (navOpen ? "" : " hidden")} id="navbar-default">
                         <ul className="font-medium flex flex-col p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
+                            {clientLinks[props.vpnType].map(e => <li>
                                 <a
-                                    href="https://openvpn.net/downloads/openvpn-connect-v3-windows.msi"
+                                    href={e.link}
                                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
                                 >
-                                    Windows Client
+                                    {e.name}
                                 </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://openvpn.net/downloads/openvpn-connect-v3-macos.dmg"
-                                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
-                                >
-                                    MacOS Client
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://openvpn.net/cloud-docs/owner/connectors/connector-user-guides/openvpn-3-client-for-linux.html"
-                                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
-                                >
-                                    Linux Client
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://play.google.com/store/apps/details?id=net.openvpn.openvpn"
-                                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
-                                >
-                                    Android Client
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://apps.apple.com/us/app/openvpn-connect/id590379981"
-                                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
-                                >
-                                    iOS Client
-                                </a>
-                            </li>
+                            </li>)}
                         </ul>
                     </div>
                 </div>

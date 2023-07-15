@@ -1,15 +1,14 @@
 from flask import *
 import os
-import openvpn
 import psutil
-from creds import creds
+from config import creds, vpn
 
 username = creds["username"]
 password = creds["password"]
 
 
 app = Flask(
-    "OpenVpn Admin",
+    f"{vpn.vpnName} Admin",
     static_folder=os.path.abspath("frontend/build/static"),
     template_folder=os.path.abspath("frontend/build"),
 )
@@ -22,8 +21,13 @@ def isAdmin(reqArgs):
 
 
 @app.route("/")
-def hello():
+def homePage():
     return render_template("index.html")
+
+
+@app.route("/type")
+def vpnType():
+    return {"type": vpn.vpnName}
 
 
 @app.route("/login")
@@ -43,7 +47,7 @@ def loginCheck():
 @app.route("/list")
 def listUsers():
     if isAdmin(request.args):
-        return openvpn.listUsers()
+        return vpn.listUsers()
     else:
         return []
 
@@ -51,7 +55,7 @@ def listUsers():
 @app.route("/create/<path:name>")
 def createUser(name):
     if isAdmin(request.args):
-        openvpn.createUser(name)
+        vpn.createUser(name)
         return {"success": True}
     else:
         return {"success": False}
@@ -60,7 +64,7 @@ def createUser(name):
 @app.route("/remove/<path:name>")
 def removeUser(name):
     if isAdmin(request.args):
-        openvpn.removeUser(name)
+        vpn.removeUser(name)
         return {"success": True}
     else:
         return {"success": False}
@@ -70,9 +74,11 @@ def removeUser(name):
 def getConfig(name):
     if isAdmin(request.args):
         return Response(
-            openvpn.getConfig(name),
-            mimetype="text/x-ovpn",
-            headers={"Content-Disposition": f"attachment;filename={name}.ovpn"},
+            vpn.getConfig(name),
+            mimetype=f"text/x-{vpn.vpnExtension}",
+            headers={
+                "Content-Disposition": f"attachment;filename={name}.{vpn.vpnExtension}"
+            },
         )
     else:
         return {"error": "Incorrect admin credentials!"}

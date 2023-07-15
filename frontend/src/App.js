@@ -4,7 +4,23 @@ import axios from "axios";
 import NavBar from "./NavBar";
 
 export default function App() {
-    useEffect(hideLoader, []);
+    const [vpnType, setVpnType] = useState("");
+
+    useEffect(() => {
+        const fetchVpnType = async () => {
+            try {
+                const { data: response } = await axios.get(window.APIROOT + 'type');
+                setVpnType(response.type);
+                hideLoader();
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchVpnType();
+    }, []);
+
     const [loggedIn, setLoggedIn] = useState(false);
     const [systemStats, setSetsystemStats] = useState({ cpu: 0, memory: 0 });
 
@@ -87,11 +103,11 @@ export default function App() {
 
     return (
         <>
-            <NavBar />
+            <NavBar vpnType={vpnType} />
             <div className="flex flex-col items-center gap-1 md:flex-row md:justify-center md:gap-5 md:px-6 px-4 mt-[4.7rem]">
                 <div className="mt-4 card w-full bg-base-100 border shadow-lg max-w-sm">
                     <div className="card-body">
-                        <h1 className="card-title text-2xl mb-2">{loggedIn ? "OpenVPN Admin" : "Login to OpenVPN"}</h1>
+                        <h1 className="card-title text-2xl mb-2">{loggedIn ? `${vpnType} Admin` : `Login to ${vpnType}`}</h1>
                         {loggedIn ? <>
                             <h2 className="-mb-2 mt-1 font-semibold">
                                 <span className="mr-2">Current load on CPU</span>

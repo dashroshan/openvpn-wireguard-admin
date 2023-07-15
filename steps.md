@@ -7,6 +7,7 @@ sudo ufw allow 4000
 ```
 
 Create 1GB Swap memeory `(1M * 1000 ~= 1GB)`
+
 ```
 mkdir -p /var/swapmemory
 cd /var/swapmemory
@@ -15,6 +16,13 @@ mkswap swapfile
 swapon swapfile
 chmod 600 swapfile
 free -m
+```
+
+Boost network performance
+
+```
+sudo sysctl -w net.core.rmem_max=26214400
+sudo sysctl -w net.core.rmem_default=26214400
 ```
 
 Install python
@@ -36,7 +44,7 @@ sudo apt install caddy
 Create Caddyfile
 
 ```
-openvpn-username.dashroshan.com {
+xvpn-username.dashroshan.com {
     reverse_proxy localhost:5000
 }
 ```
@@ -47,17 +55,25 @@ Reload caddy
 sudo caddy reload
 ```
 
-Setup openvpn
+Setup desired vpn service
+
+> OpenVPN
 
 ```
-sudo sysctl -w net.core.rmem_max=26214400
-sudo sysctl -w net.core.rmem_default=26214400
 wget https://git.io/vpn -O openvpn-install.sh
 sudo chmod +x openvpn-install.sh
 sudo bash openvpn-install.sh
 ```
 
-Run this admin portal
+> Wireguard
+
+```
+wget https://git.io/wireguard -O wireguard-install.sh
+sudo chmod +x wireguard-install.sh
+sudo bash wireguard-install.sh
+```
+
+Setup this admin portal
 
 ```
 git clone https://github.com/dashroshan/openvpn-admin ov
@@ -66,14 +82,19 @@ sudo python3 -m pip install -r requirements.txt
 sudo nano creds.py
 ```
 
-Fill creds.py with below content
+Fill config.py with below content and uncomment desired vpn
 
-```
+```py
+# import openvpn as vpn
+# import wireguard as vpn
+
 creds = {
-    "username": "user",
-    "password": "pass",
+    "username": "roshan",
+    "password": "dash",
 }
 ```
+
+If using wireguard toggle adblock in wireguard.py
 
 Start portal in screen session
 
