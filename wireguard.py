@@ -1,8 +1,8 @@
 from subprocess import Popen, PIPE
+from configWireguard import wireGuardBlockAds
 
 vpnName = "WireGuard"
 vpnExtension = "conf"
-wireGuardBlockAds = False
 
 
 def createUser(user):

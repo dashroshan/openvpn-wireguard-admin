@@ -76,10 +76,10 @@ sudo bash wireguard-install.sh
 Setup this admin portal
 
 ```
-git clone https://github.com/dashroshan/openvpn-admin ov
+git clone https://github.com/dashroshan/openvpn-wireguard-admin ov
 cd ov
 sudo python3 -m pip install -r requirements.txt
-sudo nano creds.py
+sudo nano config.py
 ```
 
 Fill config.py with below content and uncomment desired vpn
@@ -94,7 +94,11 @@ creds = {
 }
 ```
 
-If using wireguard toggle adblock in wireguard.py
+If using wireguard create configWireguard.py with
+
+```py
+wireGuardBlockAds = False
+```
 
 Start portal in screen session
 

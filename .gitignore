@@ -1,4 +1,5 @@
 config.py
+configWireguard.py
 
 .DS_Store
 .env
