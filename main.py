@@ -2,16 +2,23 @@ from flask import *
 import os
 import psutil
 from config import creds, vpn
+import logging
 
 username = creds["username"]
 password = creds["password"]
 
+
+log = logging.getLogger("werkzeug")
+log.setLevel(logging.ERROR)
 
 app = Flask(
     f"{vpn.vpnName} Admin",
     static_folder=os.path.abspath("frontend/build/static"),
     template_folder=os.path.abspath("frontend/build"),
 )
+
+app.logger.disabled = True
+log.disabled = True
 
 
 def isAdmin(reqArgs):
