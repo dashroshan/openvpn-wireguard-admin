@@ -4,7 +4,7 @@ import axios from "axios";
 import NavBar from "./NavBar";
 
 export default function App() {
-    const [vpnType, setVpnType] = useState("");
+    const [vpnType, setVpnType] = useState("OpenVPN");
 
     useEffect(() => {
         const fetchVpnType = async () => {
