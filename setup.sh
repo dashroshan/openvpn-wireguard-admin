@@ -44,6 +44,7 @@ caddy reload --config /etc/caddy/Caddyfile
 echo "Reverse proxy configured with caddy."
 
 # Setup the web admin panel
+cd
 git clone https://github.com/dashroshan/openvpn-wireguard-admin vpn
 cd vpn
 python3 -m pip install -r requirements.txt
@@ -61,7 +62,7 @@ fi
 
 # Create the config.py
 read -p "Web admin panel username: " adminuser
-read -p "Web admin panel password: " adminupass
+read -p "Web admin panel password: " adminpass
 cat << EOF > config.py
 import $vpntype as vpn
 creds = {
@@ -72,6 +73,7 @@ EOF
 echo "config.py file created for web admin panel."
 
 # Download vpn setup script
+cd
 if [ "$vpntype" == "wireguard" ]; then
 wget https://raw.githubusercontent.com/Nyr/wireguard-install/master/wireguard-install.sh -O vpn-install.sh
 else
