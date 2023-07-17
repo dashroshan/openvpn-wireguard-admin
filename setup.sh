@@ -63,11 +63,14 @@ fi
 # Create the config.py
 read -p "Web admin panel username: " adminuser
 read -p "Web admin panel password: " adminpass
+
+passwordhash=$(echo -n $adminpass | sha256sum | cut -d" " -f1)
+
 cat << EOF > config.py
 import $vpntype as vpn
 creds = {
     "username": "$adminuser",
-    "password": "$adminpass",
+    "password": "$passwordhash",
 }
 EOF
 echo "config.py file created for web admin panel."
