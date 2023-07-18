@@ -2,6 +2,7 @@ from flask import *
 import os
 import psutil
 from config import creds, vpn
+from hashlib import sha256
 import logging
 
 username = creds["username"]
@@ -24,7 +25,10 @@ log.disabled = True
 def isAdmin(reqArgs):
     adminUserName = reqArgs.get("username")
     adminPassWord = reqArgs.get("password")
-    return adminUserName == username and adminPassWord == password
+    
+    hashedInput = sha256(adminPassWord.encode('utf-8')).hexdigest()
+    
+    return adminUserName == username and hashedInput == password
 
 
 @app.route("/")
