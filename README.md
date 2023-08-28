@@ -1,5 +1,7 @@
 # OpenVPN • WireGuard
 
+Compatible with Debian 11
+
 Install OpenVPN or WireGuard along with a web admin panel on a freshly created virtual machine using just a single line of command.
 
 ```bash
