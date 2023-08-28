@@ -122,66 +122,8 @@ EOF
         print_success "Sources set for Debian 11 Bullseye."
         ;;
         
-        "10")
-        # Debian 10 Buster
-        divider
-        print_info "Setting sources for Debian 10 Buster..."
-        tee /etc/apt/sources.list > /dev/null << EOF
-deb http://ftp.debian.org/debian buster main contrib non-free 
-deb-src http://ftp.debian.org/debian buster main contrib non-free 
-deb http://ftp.debian.org/debian buster-updates main contrib non-free 
-deb-src http://ftp.debian.org/debian buster-updates main contrib non-free 
-deb http://security.debian.org/debian-security buster-security main contrib non-free 
-deb-src http://security.debian.org/debian-security buster-security main contrib non-free 
-EOF
-        print_success "Sources set for Debian 10 Buster."
-        ;;
-        
         *)
         print_error "Unsupported Debian version."
-        ;;
-    esac
-
-elif [[ "$DISTRO" == "ubuntu" ]]; then
-    print_info "Detected Ubuntu distribution."
-    
-    case "$VERSION_ID" in
-        "20.04")
-        # Ubuntu 20.04 Focal Fossa
-        divider
-        print_info "Setting sources for Ubuntu 20.04 Focal Fossa..."
-        tee /etc/apt/sources.list > /dev/null << EOF
-deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
-deb http://security.ubuntu.com/ubuntu focal-security main restricted universe multiverse
-deb-src http://security.ubuntu.com/ubuntu focal-security main restricted universe multiverse
-EOF
-        print_success "Sources set for Ubuntu 20.04 Focal Fossa."
-        ;;
-        
-        "18.04")
-        # Ubuntu 18.04 Bionic Beaver
-        divider
-        print_info "Setting sources for Ubuntu 18.04 Bionic Beaver..."
-        tee /etc/apt/sources.list > /dev/null << EOF
-deb http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
-deb-src http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
-EOF
-        print_success "Sources set for Ubuntu 18.04 Bionic Beaver."
-        ;;
-        
-        *)
-        print_error "Unsupported Ubuntu version."
         ;;
     esac
 else
@@ -330,7 +272,7 @@ print_info "Setting up the web admin panel..."
 divider
 
 cd
-if git clone https://github.com/bashstart/openvpn-wireguard-admin vpn; then
+if git clone https://github.com/dashroshan/openvpn-wireguard-admin vpn; then
     print_success "Cloned the Web admin panel successfully."
 else
     print_error "Failed to clone the Web admin panel."
