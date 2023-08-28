@@ -5,6 +5,7 @@ Compatible with Debian 11
 Install OpenVPN or WireGuard along with a web admin panel on a freshly created virtual machine using just a single line of command.
 
 ```bash
+apt update
 apt install sudo
 sudo wget https://raw.githubusercontent.com/bashstart/openvpn-wireguard-admin/main/setup.sh -O setup.sh && sudo chmod +x setup.sh && sudo bash setup.sh
 ```
