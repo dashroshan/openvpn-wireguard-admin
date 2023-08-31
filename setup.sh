@@ -44,9 +44,9 @@ divider
 print_info "Synchronizing system time..."
 divider
 
-sudo apt install ntp -y
-sudo systemctl start ntp
-sudo systemctl enable ntp
+apt install ntp -y
+systemctl start ntp
+systemctl enable ntp
 print_success "System time is synchronized."
 
 divider
