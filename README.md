@@ -1,6 +1,6 @@
 # OpenVPN • WireGuard
 
-Compatible with Debian 11
+Compatible with Debian 11 Minimal.
 
 Install OpenVPN or WireGuard along with a web admin panel on a freshly created virtual machine using just a single line of command.
 
